@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "./Navbar.module.css";
 import Logo from "./../../assets/Flutza Store Logo/flutza-logo.png";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,8 +55,7 @@ export default function Navbar() {
       </nav>
       {/* for mobile */}
       <div
-        className={`absolute top-0 bottom-0 z-50 start-0 end-2/12 ${isOpen? `translate-x-0`:`-translate-x-full`} duration-500 lg:hidden bg-white text-2xl`}
-      >
+        className={`absolute top-0 bottom-0 z-50 start-0 end-2/12 ${isOpen? `translate-x-0`:`-translate-x-full`} duration-500 lg:hidden bg-white text-2xl`}>
         <div className="fix text-white bg-main py-2 px-4 flex justify-between">
           <span className="font-semibold">MENU</span>
           <button onClick={() => setIsOpen(false)} className="cursor-pointer">
@@ -100,11 +100,11 @@ export default function Navbar() {
       {/* last menu navbar */}
       {!isOpen&&<div className="navgation-menu sticky top-0 z-40 bg-main flex justify-center items-center text-white font-semibold uppercase">
         <ul className="flex ">
-          <li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Home</li>
-          <li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Cart</li>
-          <li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Products</li>
-          <li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Catgories</li>
-          <li className="border-y-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Brands</li>
+          <Link to={'/'}><li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Home</li></Link>
+          <Link to={'/cart'}><li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Cart</li></Link>
+          <Link to={'/products'}><li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Products</li></Link>
+          <Link to={'/categories'}><li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Catgories</li></Link>
+          <Link to={'/brands'}><li className="border-y-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Brands</li></Link>
         </ul>
       </div>}
 

@@ -14,6 +14,9 @@ import VerifyCode from "./Components/VerifyCode/VerifyCode.jsx";
 import UserContextProvider from "./Context/UserContext.jsx";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.jsx";
 import RestrictedRoute from "./Components/RestrictedRoute/RestrictedRoute.jsx";
+import ResetPassword from "./Components/ResetPassword/ResetPassword.jsx";
+import ProudectVerifyCodeRoute from "./Components/ProudectVerifyCodeRoute/ProudectVerifyCodeRoute.jsx";
+import ProdectedResetPassword from "./Components/ProdectedResetPassword/ProdectedResetPassword.jsx";
 
 
 const routers = createBrowserRouter([{
@@ -21,7 +24,8 @@ const routers = createBrowserRouter([{
     {path:'sign-up' , element:<RestrictedRoute><Register/></RestrictedRoute>},
     {path:'sign-in' , element:<RestrictedRoute><Login/></RestrictedRoute>},
     {path:'forgot-password' , element:<RestrictedRoute><ForgetPassword/></RestrictedRoute>},
-    {path:'verify-code' , element:<RestrictedRoute><VerifyCode/></RestrictedRoute>},
+    {path:'verify-code' , element:<RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode/></ProudectVerifyCodeRoute></RestrictedRoute>},
+    {path:'reset-password' , element:<RestrictedRoute><ProdectedResetPassword><ResetPassword/></ProdectedResetPassword></RestrictedRoute>},
     {index:true , element:<Home/>},
     {path:'cart' , element:<ProtectedRoute><Cart/></ProtectedRoute>},
     {path:'wishList' , element:<ProtectedRoute><WishList/></ProtectedRoute>},

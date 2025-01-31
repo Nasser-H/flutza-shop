@@ -3,6 +3,9 @@ import style from "./Home.module.css"
 
 export default function Home() {
 
+    useEffect(() => {
+        document.title = "Flutza Shop";
+    }, [])  
     
   return (
     <>

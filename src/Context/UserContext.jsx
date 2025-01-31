@@ -28,8 +28,10 @@ export default function UserContextProvider({children}) {
   };
 
     const [userToken, setUserToken] = useState(null);
+    const [userVerifyCode, setUserVerifyCode] = useState(false);
+    const [userResetPassword, setUserResetPassword] = useState(false);
 
-  return <UserContext.Provider value={{ userToken, setUserToken ,verifyToken }}>
+  return <UserContext.Provider value={{ userToken, setUserToken, verifyToken, setUserVerifyCode, userVerifyCode, userResetPassword, setUserResetPassword }}>
     {children}
   </UserContext.Provider>
 }

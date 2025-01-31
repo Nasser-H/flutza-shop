@@ -35,7 +35,7 @@ export default function Register() {
     const validationSchema = Yup.object().shape({
       name: Yup.string().required("Name is required"),
       email: Yup.string().required("Email is required").email("must be a valid email"),
-      password: Yup.string().required("Password is required").matches(/^[a-zA-Z][a-zA-Z0-9]{5,8}$/,"must be :- \n* Start with a letter (either uppercase or lowercase). \n* Be between 6 and 9 characters in total. \n* Can only contain letters (A-Z or a-z) and numbers (0-9) \n- ex.(Nasser123)"),
+      password: Yup.string().required("Password is required").matches(/^[a-zA-Z][a-zA-Z0-9]{5,15}$/,"must be :- \n* Start with a letter (either uppercase or lowercase). \n* Be between 6 and 16 characters in total. \n* Can only contain letters (A-Z or a-z) and numbers (0-9) \n- ex.(Nasser123)"),
       rePassword: Yup.string().required("re-Password is required").oneOf([Yup.ref('password')],"Password and re-entered password do not match"),
       phone: Yup.string().required("phone is required").matches(/^01[0125][0-9]{8}$/,"Must be a valid Egyptian number with 11 digits starting with 01 \nex.(01061132684).")
     });

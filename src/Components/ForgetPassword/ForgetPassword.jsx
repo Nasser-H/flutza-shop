@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import style from "./ForgetPassword.module.css"
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { UserContext } from '../../Context/UserContext';
 
 export default function ForgetPassword() {
     useEffect(() => {
@@ -14,15 +15,18 @@ export default function ForgetPassword() {
     const [apiError, setApiError] = useState(null);
     const [apiSuccess, setApiSucces] = useState(null);
 
-    const navigate =  useNavigate()    
+    const navigate =  useNavigate()   
+    let {setUserVerifyCode} = useContext(UserContext);
+   
 
     async function forgetPassword(values){
       try {
        setLoading(true);
        let {data} = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/forgotPasswords",values);
-       setApiSucces(data.message);
        setApiError(null);
        setLoading(false);
+       setApiSucces(data.message);
+       setUserVerifyCode(true);
        navigate('/verify-code');       
       } catch (error) {
        setApiSucces(null);
