@@ -11,17 +11,20 @@ import Register from "./Components/Register/Register.jsx";
 import Login from "./Components/Login/Login.jsx";
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword.jsx";
 import VerifyCode from "./Components/VerifyCode/VerifyCode.jsx";
+import UserContextProvider from "./Context/UserContext.jsx";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.jsx";
+import RestrictedRoute from "./Components/RestrictedRoute/RestrictedRoute.jsx";
 
 
 const routers = createBrowserRouter([{
   path:'',element:<Layout/> ,children: [
-    {path:'sign-up' , element:<Register/>},
-    {path:'sign-in' , element:<Login/>},
-    {path:'forgot-password' , element:<ForgetPassword/>},
-    {path:'verify-code' , element:<VerifyCode/>},
+    {path:'sign-up' , element:<RestrictedRoute><Register/></RestrictedRoute>},
+    {path:'sign-in' , element:<RestrictedRoute><Login/></RestrictedRoute>},
+    {path:'forgot-password' , element:<RestrictedRoute><ForgetPassword/></RestrictedRoute>},
+    {path:'verify-code' , element:<RestrictedRoute><VerifyCode/></RestrictedRoute>},
     {index:true , element:<Home/>},
-    {path:'cart' , element:<Cart/>},
-    {path:'wishList' , element:<WishList/>},
+    {path:'cart' , element:<ProtectedRoute><Cart/></ProtectedRoute>},
+    {path:'wishList' , element:<ProtectedRoute><WishList/></ProtectedRoute>},
     {path:'products' , element:<Products/>},
     {path:'categories' , element:<Categories/>},
     {path:'brands' , element:<Brands/>},
@@ -31,7 +34,10 @@ const routers = createBrowserRouter([{
 function App() {
   return (
     <>
-      <RouterProvider router={routers}></RouterProvider>
+      <UserContextProvider>
+        <RouterProvider router={routers}></RouterProvider>
+      </UserContextProvider>
+      
     </>
   );
 }

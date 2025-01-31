@@ -1,8 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import style from "./Topbar.module.css";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
 export default function Topbar() {
+  
+  let {userToken , setUserToken} = useContext(UserContext);
+
+  function logout(){
+    setUserToken(null);
+    localStorage.removeItem("userToken");
+  }
+  
   return (
     <>
       <header className="lg:bg-[#303841] text-sm bg-main flex justify-between text-center text-white px-12 py-2">
@@ -36,6 +45,10 @@ export default function Topbar() {
               </div>
               Wish list <i className="fa-regular fa-heart ms-1"></i>
             </li>
+            {userToken?
+            <li>
+              <button onClick={()=>logout()} className="cursor-pointer">Logout <i className="fa-solid fa-arrow-right-from-bracket fa-flip-horizontal"></i></button>
+            </li>:<>
             <li>
               <Link to={'/sign-in'}>
                 Login <i className="fa-solid fa-arrow-right-to-bracket"></i>
@@ -43,7 +56,8 @@ export default function Topbar() {
             </li>
             <li>
               <Link to={"/sign-up"}>Register</Link>
-            </li>
+            </li>            
+            </>}
           </ul>
         </div>
       </header>
