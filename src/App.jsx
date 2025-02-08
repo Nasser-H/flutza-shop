@@ -13,10 +13,13 @@ import ForgetPassword from "./Components/ForgetPassword/ForgetPassword.jsx";
 import VerifyCode from "./Components/VerifyCode/VerifyCode.jsx";
 import UserContextProvider from "./Context/UserContext.jsx";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.jsx";
+import Notfound from "./Components/Notfound/Notfound.jsx";
 import RestrictedRoute from "./Components/RestrictedRoute/RestrictedRoute.jsx";
 import ResetPassword from "./Components/ResetPassword/ResetPassword.jsx";
 import ProudectVerifyCodeRoute from "./Components/ProudectVerifyCodeRoute/ProudectVerifyCodeRoute.jsx";
 import ProdectedResetPassword from "./Components/ProdectedResetPassword/ProdectedResetPassword.jsx";
+import ProductDetails from "./Components/ProductDetails/ProductDetails.jsx";
+import CartContextProvider from "./Context/CartContext.jsx";
 
 
 const routers = createBrowserRouter([{
@@ -30,8 +33,10 @@ const routers = createBrowserRouter([{
     {path:'cart' , element:<ProtectedRoute><Cart/></ProtectedRoute>},
     {path:'wishList' , element:<ProtectedRoute><WishList/></ProtectedRoute>},
     {path:'products' , element:<Products/>},
+    {path:'product-details/:id' , element:<ProductDetails/>},
     {path:'categories' , element:<Categories/>},
     {path:'brands' , element:<Brands/>},
+    {path:'*' , element:<Notfound/>},
 
   ]
 }])
@@ -39,7 +44,9 @@ function App() {
   return (
     <>
       <UserContextProvider>
-        <RouterProvider router={routers}></RouterProvider>
+        <CartContextProvider>
+          <RouterProvider router={routers}></RouterProvider>
+        </CartContextProvider>
       </UserContextProvider>
       
     </>

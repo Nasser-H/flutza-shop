@@ -3,7 +3,7 @@ import style from "./Notfound.module.css"
 
 export default function Notfound() {
     useEffect(() => {
-        document.title = "Notfound";
+        document.title = "Not found";
     }, [])
     
   return (

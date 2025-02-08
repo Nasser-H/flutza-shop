@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import style from "./Navbar.module.css";
 import Logo from "./../../assets/Flutza Store Logo/flutza-logo.png";
 import { Link } from "react-router-dom";
+import { CartContext } from "../../Context/CartContext";
 
 export default function Navbar() {
+
+  let {cart} = useContext(CartContext);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -31,7 +34,7 @@ export default function Navbar() {
           <button className="text-white text-2xl relative">
             <i className="fa-regular fa-heart"></i>
             <div className="count absolute -top-1/12 -end-9/12 text-xs p-1 border size-4 flex justify-center items-center rounded-full bg-main border-main">
-              5
+              5aa
             </div>
           </button>
         </div>
@@ -42,13 +45,13 @@ export default function Navbar() {
           <button className="text-white text-xl relative">
             <i className="fa-solid fa-cart-shopping"></i>
             <div className="count absolute -top-1/12 -end-9/12 text-xs p-1 border size-4 flex justify-center items-center rounded-full bg-main border-main">
-              5
+              {cart?.numOfCartItems}
             </div>
           </button>
         </div>
         <div className="cart pe-5 hidden lg:block">
           <div className="text-white border px-3 lg:px-6 py-2 rounded-full border-[#505050] hover:border-[#6D767D]">
-            0 item(s) - 200 EGP
+            {cart?.numOfCartItems} item(s) - {cart?.data.totalCartPrice} EGP
             <i className="fa-solid fa-cart-arrow-down text-main ps-3"></i>
           </div>
         </div>
@@ -65,31 +68,31 @@ export default function Navbar() {
         <div className="menu">
           <ul className="ps-5 space-y-4 pt-5">
             <li className="flex justify-between text-[#6D767D] hover:text-main duration-500">
-              <span> Home </span>{" "}
+              <span> Home </span>
               <span className="size-9 flex justify-center items-center rounded-full me-5 border ">
                 <i className="fa-solid fa-plus"></i>
               </span>
             </li>
             <li className="flex justify-between text-[#6D767D] hover:text-main duration-500">
-              <span> Cart </span>{" "}
+              <span> Cart </span>
               <span className="size-9 flex justify-center items-center rounded-full me-5 border ">
                 <i className="fa-solid fa-plus"></i>
               </span>
             </li>
             <li className="flex justify-between text-[#6D767D] hover:text-main duration-500">
-              <span> Products </span>{" "}
+              <span> Products </span>
               <span className="size-9 flex justify-center items-center rounded-full me-5 border ">
                 <i className="fa-solid fa-plus"></i>
               </span>
             </li>
             <li className="flex justify-between text-[#6D767D] hover:text-main duration-500">
-              <span> Catgories </span>{" "}
+              <span> Catgories </span>
               <span className="size-9 flex justify-center items-center rounded-full me-5 border ">
                 <i className="fa-solid fa-plus"></i>
               </span>
             </li>
             <li className="flex justify-between text-[#6D767D] hover:text-main duration-500">
-              <span> Brands </span>{" "}
+              <span> Brands </span>
               <span className="size-9 flex justify-center items-center rounded-full me-5 border ">
                 <i className="fa-solid fa-plus"></i>
               </span>
