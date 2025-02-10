@@ -24,42 +24,49 @@ import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import WishListContextProvider from "./Context/WishListContext.jsx";
 import SearchContextProvider from "./Context/SearchContext.jsx";
+import CheckOut from "./Components/CheckOut/CheckOut.jsx";
+import ProtectedCheckOut from "./Components/ProtectedCheckOut/ProtectedCheckOut.jsx";
+import AllOrders from "./Components/AllOrders/AllOrders.jsx";
+import DetailsAboutOrder from "./Components/DetailsAboutOrder/DetailsAboutOrder.jsx";
 
 
 const routers = createBrowserRouter([{
-  path:'',element:<Layout/> ,children: [
-    {path:'sign-up' , element:<RestrictedRoute><Register/></RestrictedRoute>},
-    {path:'sign-in' , element:<RestrictedRoute><Login/></RestrictedRoute>},
-    {path:'forgot-password' , element:<RestrictedRoute><ForgetPassword/></RestrictedRoute>},
-    {path:'verify-code' , element:<RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode/></ProudectVerifyCodeRoute></RestrictedRoute>},
-    {path:'reset-password' , element:<RestrictedRoute><ProdectedResetPassword><ResetPassword/></ProdectedResetPassword></RestrictedRoute>},
-    {index:true , element:<Home/>},
-    {path:'cart' , element:<ProtectedRoute><Cart/></ProtectedRoute>},
-    {path:'wishList' , element:<ProtectedRoute><WishList/></ProtectedRoute>},
-    {path:'products' , element:<Products/>},
-    {path:'product-details/:id' , element:<ProductDetails/>},
-    {path:'categories' , element:<Categories/>},
-    {path:'brands' , element:<Brands/>},
-    {path:'*' , element:<Notfound/>},
+  path: '', element: <Layout />, children: [
+    { path: 'sign-up', element: <RestrictedRoute><Register /></RestrictedRoute> },
+    { path: 'sign-in', element: <RestrictedRoute><Login /></RestrictedRoute> },
+    { path: 'forgot-password', element: <RestrictedRoute><ForgetPassword /></RestrictedRoute> },
+    { path: 'verify-code', element: <RestrictedRoute><ProudectVerifyCodeRoute><VerifyCode /></ProudectVerifyCodeRoute></RestrictedRoute> },
+    { path: 'reset-password', element: <RestrictedRoute><ProdectedResetPassword><ResetPassword /></ProdectedResetPassword></RestrictedRoute> },
+    { index: true, element: <Home /> },
+    { path: 'cart', element: <ProtectedRoute><Cart /></ProtectedRoute> },
+    { path: 'allorders', element: <ProtectedRoute><AllOrders /></ProtectedRoute> },
+    { path: 'details-order/:id', element: <ProtectedRoute><DetailsAboutOrder/></ProtectedRoute> },
+    { path: 'cart/check-out', element: <ProtectedRoute><ProtectedCheckOut><CheckOut /></ProtectedCheckOut></ProtectedRoute> },
+    { path: 'wishList', element: <ProtectedRoute><WishList /></ProtectedRoute> },
+    { path: 'products', element: <Products /> },
+    { path: 'product-details/:id', element: <ProductDetails /> },
+    { path: 'categories', element: <Categories /> },
+    { path: 'brands', element: <Brands /> },
+    { path: '*', element: <Notfound /> },
 
   ]
 }])
-const queryClient  = new QueryClient();
+const queryClient = new QueryClient();
 function App() {
   return (
     <>
-    <UserContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <CartContextProvider>          
-          <WishListContextProvider>
-            <SearchContextProvider>
-              <RouterProvider router={routers}></RouterProvider>
-              <Toaster />
-            </SearchContextProvider>
-          </WishListContextProvider>
-        </CartContextProvider>
-      </QueryClientProvider>
-    </UserContextProvider>
+      <UserContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <CartContextProvider>
+            <WishListContextProvider>
+              <SearchContextProvider>
+                <RouterProvider router={routers}></RouterProvider>
+                <Toaster />
+              </SearchContextProvider>
+            </WishListContextProvider>
+          </CartContextProvider>
+        </QueryClientProvider>
+      </UserContextProvider>
     </>
   );
 }

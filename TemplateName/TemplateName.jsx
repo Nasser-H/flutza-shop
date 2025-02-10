@@ -6,9 +6,9 @@ export default function TemplateName() {
         document.title = "TemplateName";
     }, [])
     
-  return (
-    <>
+  return <>
+  
       <h2>TemplateName</h2>
     </>
-  );
+
 }

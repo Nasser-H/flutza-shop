@@ -34,11 +34,15 @@ export default function Cart() {
           <div className="border-2 w-fit mx-auto  border-main px-4 py-1 rounded-full uppercase">
             total number of items : <span className='font-bold text-main'>{totalCart?.numOfCartItems}</span></div>
           </div> 
-          <div className="py-2 mb-4 text-right">
-            <button 
-            className='text-white me-16 bg-[#303841] hover:bg-main cursor-pointer focus:ring-1 focus:outline-none focus:ring-red-300 font-medium  text-base w-full sm:w-auto px-8 py-2.5 text-center rounded-xl'>
+          <div className="py-2 mb-4 flex justify-between">
+          <Link to={'/allorders'}
+            className='text-white ms-16 inline-block bg-[#303841] hover:bg-main cursor-pointer focus:ring-1 focus:outline-none focus:ring-red-300 font-medium  text-base w-full sm:w-auto px-8 py-2.5 text-center rounded-xl'>
+              All Old Orders
+            </Link>    
+          <Link to={totalCart?.numOfCartItems > 0 && 'check-out'}
+            className='text-white me-16 inline-block bg-[#303841] hover:bg-main cursor-pointer focus:ring-1 focus:outline-none focus:ring-red-300 font-medium  text-base w-full sm:w-auto px-8 py-2.5 text-center rounded-xl'>
               Check Out {totalCart?.numOfCartItems>0&& <>:<br />{totalCart?.data?.totalCartPrice}.00 EGP</>}
-            </button>    
+            </Link>    
           </div>   
         <div className="relative overflow-x-auto shadow-md sm:rounded-b-lg">
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 x-5">

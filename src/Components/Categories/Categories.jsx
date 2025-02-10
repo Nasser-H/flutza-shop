@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import style from "./Categories.module.css"
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../Loading/Loading';
 import axios from 'axios';
+import { SearchContext } from '../../Context/SearchContext';
 
 export default function Categories() {
 
+  let { searchProducts } = useContext(SearchContext);
   function geCategories() {
     return axios.get("https://ecommerce.routemisr.com/api/v1/categories");
   }
@@ -29,8 +31,8 @@ export default function Categories() {
           </h2>
         </div>        
         <div className="flex w-full flex-wrap justify-center my-16 gap-8">
-          {data?.data.data.map((Categorie,index)=>
-            <div key={index} className="w-1/6 overflow-hidden relative drop-shadow-xl group">
+          {data?.data.data.filter(item => item?.name.toLowerCase().includes(searchProducts?.search?.toLowerCase())).map((Categorie,index)=>
+            <div key={index} className="lg:w-1/6 w-4/6 sm:w-1/3 md:w-1/4 overflow-hidden relative drop-shadow-xl group">
               <img src={Categorie.image} className='w-full group-hover:scale-120 duration-500 h-50 grayscale-50 group-hover:grayscale-0' alt={Categorie.name} />
               <p className='bg-main text-white w-full absolute bottom-0 h-8 translate-y-full group-hover:translate-y-0 duration-200'>
                 <span className='absolute top-1/2 start-1/2 -translate-1/2 w-full text-center font-bold'>
