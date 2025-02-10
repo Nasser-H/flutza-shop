@@ -5,12 +5,16 @@ import axios from 'axios';
 import { UserContext } from '../../Context/UserContext';
 import Slider from "react-slick";
 import Loading from '../Loading/Loading';
+import { CartContext } from '../../Context/CartContext';
+import { WishListContext } from '../../Context/WishListContext';
 
 
 export default function ProductDetails() {
     let {id} = useParams();
     const navigate =  useNavigate();
     let {userToken} = useContext(UserContext);
+    let {addToCart} = useContext(CartContext);
+    let {wishListIsLoading, wishListArrID, removeFromWishList, addProductToWishList} = useContext(WishListContext)
 
     const [product, setProduct] = useState(null);
     const [relatedProductsByID, setRelatedProductsByID] = useState(null);
@@ -137,7 +141,12 @@ export default function ProductDetails() {
                 <i className="fa-solid fa-star text-[#FFD43B] me-1"></i> {product.ratingsAverage}
               </span>
             </div>
-            <button className='text-white bg-[#303841]  hover:bg-main cursor-pointer focus:ring-1 focus:outline-none focus:ring-red-300 font-medium  text-sm w-full sm:w-auto px-3 py-2.5 text-center flex mt-5'>Add To Cart <div className="border ms-2 size-5 text-xs flex justify-center items-center rounded-full"><i className="fa-solid fa-plus"></i></div></button>
+            <button onClick={()=>addToCart(product._id)}
+            className='text-white bg-[#303841]  hover:bg-main cursor-pointer focus:ring-1 focus:outline-none focus:ring-red-300 font-medium  text-sm w-full sm:w-auto px-3 py-2.5 text-center flex mt-5'>
+              Add To Cart 
+              <div className="border ms-2 size-5 text-xs flex justify-center items-center rounded-full">
+                <i className="fa-solid fa-plus"></i></div>
+            </button>
             </div>
           </div>
         }
@@ -161,16 +170,18 @@ export default function ProductDetails() {
                     <h2 className='text-center text-sm mb-2 py-2 mx-2 border-b border-b-[#ddd]  text-[#277cd9]'>{item.category.name}</h2>
                     <h3 className='text-center text-sm font-bold mb-2 relative after:absolute after:h-[0.7px] after:w-1/3 after:-bottom-[10px] after:start-1/2 after:-translate-x-1/2 after:bg-[#ddd] '>{item.title.split(" ",2).join(" ")}</h3>
                     <p className='text-center text-[14px] pt-1 pb-2'>{item.price}.00 EGP</p>
-                    <button
+                    <button onClick={()=>addToCart(item._id)}
                     className='px-3 py-[7px] mb-5 cursor-pointer block mx-auto text-white uppercase text-xs bg-[#303841] hover:bg-main duration-300 rounded-full'>
                       add to cart
                     </button>
                     {userToken&&
-                    <button 
-                    className="absolute size-8 rounded-full bg-[#303841] top-2  flex justify-center items-center cursor-pointer group-hover/wishList:end-2 -end-full duration-300">
-                      <i className="fa-regular fa-heart text-lg text-white"></i>
-                      {/* <i className="fa-regular fa-heart text-lg text-white absolute"></i> */}
-                      {/* <i className="fa-solid fa-heart text-lg text-main"></i> */}
+                    <button onClick={()=>wishListArrID.includes(product.id)?removeFromWishList(product.id):addProductToWishList(product.id)} disabled={wishListIsLoading}
+                    className={`absolute ${!wishListIsLoading&& "cursor-pointer"} size-10 rounded-xl bg-[#303841] top-2 flex justify-center items-center group-hover/wishList:end-2 -end-full duration-300`}>
+                      {wishListArrID.includes(product.id)?
+                      <>
+                        <i className="fa-regular fa-heart text-2xl text-white absolute"></i>
+                        <i className="fa-solid fa-heart text-2xl text-main"></i> 
+                      </>:<i className="fa-regular fa-heart text-2xl text-white"></i>}
                     </button>                    
                     }
                     <div

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import style from "./Footer.module.css"
 import Logo from "./../../assets/Flutza Store Logo/flutza-logo.png";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
 
@@ -84,12 +85,12 @@ export default function Footer() {
                 Custom Links
               </h2>
               <ul className="pt-5 text-base font-normal text-[#BEBEBE] w-fit">
-                <a href="#" className="hover:text-main">
+                <Link to={'/wishList'} className="hover:text-main">
                   <li>Wish List</li>
-                </a>
-                <a href="#" className="hover:text-main">
+                </Link>
+                <Link to={'/cart'} className="hover:text-main">
                   <li>Cart</li>
-                </a>
+                </Link>
               </ul>
             </div>
           </div>
@@ -99,15 +100,15 @@ export default function Footer() {
                 Custom Links
               </h2>
               <ul className="pt-5 text-base font-normal text-[#BEBEBE] w-fit">
-                <a href="#" className="hover:text-main">
+                <Link to={'/products'} className="hover:text-main">
                   <li>Products</li>
-                </a>
-                <a href="#" className="hover:text-main">
+                </Link>
+                <Link to={'/categories'} className="hover:text-main">
                   <li>Catgories</li>
-                </a>
-                <a href="#" className="hover:text-main">
+                </Link>
+                <Link to={'/brands'} className="hover:text-main">
                   <li>Brands</li>
-                </a>
+                </Link>
               </ul>
             </div>
           </div>

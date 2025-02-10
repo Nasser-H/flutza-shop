@@ -20,6 +20,9 @@ import ProudectVerifyCodeRoute from "./Components/ProudectVerifyCodeRoute/Proude
 import ProdectedResetPassword from "./Components/ProdectedResetPassword/ProdectedResetPassword.jsx";
 import ProductDetails from "./Components/ProductDetails/ProductDetails.jsx";
 import CartContextProvider from "./Context/CartContext.jsx";
+import { Toaster } from "react-hot-toast";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import WishListContextProvider from "./Context/WishListContext.jsx";
 
 
 const routers = createBrowserRouter([{
@@ -40,15 +43,20 @@ const routers = createBrowserRouter([{
 
   ]
 }])
+const queryClient  = new QueryClient();
 function App() {
   return (
     <>
-      <UserContextProvider>
-        <CartContextProvider>
-          <RouterProvider router={routers}></RouterProvider>
+    <UserContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <CartContextProvider>          
+          <WishListContextProvider>
+            <RouterProvider router={routers}></RouterProvider>
+            <Toaster/>
+          </WishListContextProvider>
         </CartContextProvider>
-      </UserContextProvider>
-      
+      </QueryClientProvider>
+    </UserContextProvider>
     </>
   );
 }

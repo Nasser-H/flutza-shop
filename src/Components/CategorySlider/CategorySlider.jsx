@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import style from "./CategorySlider.module.css"
 import axios from 'axios';
 import Slider from 'react-slick';
+import { useQuery } from '@tanstack/react-query';
 
 export default function CategorySlider(props) {
   let { loading}= props;
-  const [categories, setCategories] = useState([]);
     const settings = {
     dots: false,
     infinite: true,
@@ -48,19 +48,21 @@ export default function CategorySlider(props) {
           }
         },
       ]    
-  };    
-  async function getCategories(){
-    let {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/categories");
-    setCategories(data.data)
+  };
+
+  function getCategories(){
+    return axios.get("https://ecommerce.routemisr.com/api/v1/categories");
   }
-  useEffect(()=>{
-    getCategories();
-  },[])
+  let {data, isLoading} = useQuery({
+    queryKey:['siderCategory'],
+    queryFn:getCategories
+  })
+
   return (
     <>
-      {!loading&&
+      {!isLoading&&!loading&&
         <Slider {...settings}>
-          {categories.map((category,index)=>
+          {data?.data.data.map((category,index)=>
           <div key={index}>
             <img  src={category.image} alt={category.name} className='w-full h-[200px]' />
             <p className='text-center'>{category.name}</p>

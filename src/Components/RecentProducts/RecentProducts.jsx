@@ -5,33 +5,34 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../Context/UserContext';
 import Loading from '../Loading/Loading';
 import { CartContext } from '../../Context/CartContext';
+import { WishListContext } from '../../Context/WishListContext';
+import { useQuery } from '@tanstack/react-query';
 
 export default function RecentProducts(props) {
-  let {setLoading , loading}= props;
-  
-  useEffect(()=>{
-    getProducts();
-  },[])
+  let {setLoading} = props;
 
 
-  let {addToCart} = useContext(CartContext)
-  const [products, setProducts] = useState([]);
+  let {addToCart} = useContext(CartContext);
+  let {addProductToWishList, wishListArrID, wishListIsLoading, removeFromWishList} = useContext(WishListContext);
+  let {userToken} = useContext(UserContext);
 
-  let {userToken} = useContext(UserContext)
 
-  async function getProducts(){
-    let {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/products");
-    setProducts(data.data);
-    setLoading(false);
+  function getProducts(){
+    return axios.get("https://ecommerce.routemisr.com/api/v1/products");
   }
-    
-  return (
-    <>
+    let {data, isLoading, isFetching, isError} = useQuery({
+      queryKey: ['recentProducts'],
+      queryFn:getProducts
+    });
+  useEffect(()=>{
+    setLoading(isLoading);
+  },[isLoading, setLoading])
+  return <>
       <section className="products">
-        {loading?<Loading/>
+        {isLoading?<Loading/>
           :
             <div className="flex flex-wrap gap-5 justify-center py-6">
-              {products.map((product,index)=>  
+              {data?.data.data.map((product,index)=>  
                 <div key={index} className="w-1/6 bg-white border border-transparent hover:border-main shadow-md relative group/wishList group/image overflow-hidden cursor-pointer">
                   <Link to={`/product-details/${product.id}`}>
                     <picture className='overflow-hidden block'>
@@ -47,11 +48,13 @@ export default function RecentProducts(props) {
                       add to cart
                     </button>
                     {userToken&&
-                    <button 
-                    className="absolute size-8 rounded-full bg-[#303841] top-2  flex justify-center items-center cursor-pointer group-hover/wishList:end-2 -end-full duration-300">
-                      <i className="fa-regular fa-heart text-lg text-white"></i>
-                      {/* <i className="fa-regular fa-heart text-lg text-white absolute"></i> */}
-                      {/* <i className="fa-solid fa-heart text-lg text-main"></i> */}
+                    <button onClick={()=>wishListArrID.includes(product.id)?removeFromWishList(product.id):addProductToWishList(product.id)} disabled={wishListIsLoading}
+                    className={`absolute ${!wishListIsLoading&& "cursor-pointer"} size-10 rounded-xl bg-[#303841] top-2 flex justify-center items-center group-hover/wishList:end-2 -end-full duration-300`}>
+                      {wishListArrID.includes(product.id)?
+                      <>
+                        <i className="fa-regular fa-heart text-2xl text-white absolute"></i>
+                        <i className="fa-solid fa-heart text-2xl text-main"></i> 
+                      </>:<i className="fa-regular fa-heart text-2xl text-white"></i>}
                     </button>                    
                     }
                     <div
@@ -66,5 +69,4 @@ export default function RecentProducts(props) {
         }
       </section>
     </>
-  );
 }

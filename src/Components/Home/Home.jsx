@@ -12,9 +12,9 @@ export default function Home() {
     
   return (
     <>
-      <MainSlider loading={loading} setLoading={setLoading}/>
-      <CategorySlider loading={loading} setLoading={setLoading}/>
-      <RecentProducts loading={loading} setLoading={setLoading}/>
+      <MainSlider loading={loading}/>
+      <CategorySlider loading={loading}/>
+      <RecentProducts setLoading={setLoading}/>
     </>
   );
 }

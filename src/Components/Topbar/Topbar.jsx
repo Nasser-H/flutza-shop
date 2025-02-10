@@ -2,10 +2,12 @@ import React, { useContext, useEffect } from "react";
 import style from "./Topbar.module.css";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
+import { WishListContext } from "../../Context/WishListContext";
 
 export default function Topbar() {
   
   let {userToken , setUserToken} = useContext(UserContext);
+  let {wishList} = useContext(WishListContext);
 
   function logout(){
     setUserToken(null);
@@ -14,7 +16,7 @@ export default function Topbar() {
   
   return (
     <>
-      <header className="lg:bg-[#303841] text-sm bg-main flex justify-between text-center text-white px-12 py-2">
+      <header className="lg:bg-[#303841] text-sm bg-main flex justify-between text-center text-white px-4 lg:px-12 py-2">
         <div className="flex w-1/3 items-center space-x-4 ">
           <a
             href="https://www.facebook.com/profile.php?id=100004291441295"
@@ -37,14 +39,16 @@ export default function Topbar() {
             nasser.h0404@gmail.com
           </a>
         </div>
-        <div className="w-1/3 flex justify-end">
+        <div className="w-2/3 lg:w-1/3 flex justify-end">
           <ul className="flex space-x-6">
-            <li className="lg:flex justify-center items-center hidden">
-              <div className="size-4 border flex justify-center items-center text-xs border-main bg-main rounded-full me-1">
-                5
-              </div>
-              Wish list <i className="fa-regular fa-heart ms-1"></i>
-            </li>
+            <Link to={'/wishList'}>
+              <li className="lg:flex justify-center items-center hidden">
+                {wishList&&<div className="size-4 border flex justify-center items-center text-xs border-main bg-main rounded-full me-1">
+                  {wishList?.count}
+                </div>}
+                Wish list <i className="fa-regular fa-heart ms-1"></i>
+              </li>
+            </Link>
             {userToken?
             <li>
               <button onClick={()=>logout()} className="cursor-pointer">Logout <i className="fa-solid fa-arrow-right-from-bracket fa-flip-horizontal"></i></button>
