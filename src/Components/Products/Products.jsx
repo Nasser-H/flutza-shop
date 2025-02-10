@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from "./Products.module.css"
+import RecentProducts from '../RecentProducts/RecentProducts';
 
 export default function Products() {
     useEffect(() => {
         document.title = "Products";
     }, [])
-    
-  return (
-    <>
-      <h2>Products</h2>
+  const [loading, setLoading] = useState(true);
+
+  return <>
+    <RecentProducts setLoading={setLoading} />
     </>
-  );
 }

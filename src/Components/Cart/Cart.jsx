@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 export default function Cart() {
 
-  let {totalCart, updateCart, loadingWhenUpdate, deleteItemFromeCart, clearCart} = useContext(CartContext);
+  let { totalCart, updateCart, loadingWhenUpdate, deleteItemFromeCart, clearCart, loadingWhenClear } = useContext(CartContext);
 
   // console.log(totalCart);
   
@@ -27,7 +27,7 @@ export default function Cart() {
         <div className="flex lg:flex-row flex-col  p-6 justify-between">
           <div className="border-2 w-fit mx-auto lg:mb-0 mb-2 border-main px-4 py-1 rounded-full uppercase">total price : 
             <span className='text-main font-bold'> {totalCart?.data?.totalCartPrice}.00 EGP</span></div>
-          <button onClick={()=>clearCart()} disabled={!totalCart?.numOfCartItems}
+          <button onClick={() => clearCart()} disabled={loadingWhenClear||!totalCart?.numOfCartItems}
           className="border-2 w-fit mx-auto lg:mt-0 mt-2 order-last lg:order-0 border-[#303841ab] cursor-pointer bg-[#303841ab] text-white px-4 py-1 rounded-full uppercase">
             Clear Your Cart 
             </button>
@@ -73,7 +73,7 @@ export default function Cart() {
                     <td className="px-6 py-4 ">
                       <div className="flex items-center">
                         <button disabled={product.count<=1||loadingWhenUpdate} onClick={()=>updateCart(--product.count,product.product._id)}
-                          className={`inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500  border border-gray-300 rounded-full focus:outline-none  ${product.count<=1||loadingWhenUpdate?"bg-gray-300":"bg-white hover:bg-gray-100 cursor-pointer"} focus:ring-4 focus:ring-gray-200`} type="button">
+                          className={`inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500  border border-gray-300 rounded-full focus:outline-none  ${product.count<=1||loadingWhenUpdate?"bg-gray-300":"bg-white hover:bg-gray-100 cursor-pointer"} focus:ring-2 focus:ring-gray-200`} type="button">
                           <span className="sr-only">Quantity button</span>
                           <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M1 1h16" />
@@ -84,7 +84,7 @@ export default function Cart() {
                            placeholder={product.count} required />
                         </div>
                         <button onClick={()=>updateCart(++product.count,product.product._id)}
-                        className={`inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 border border-gray-300 rounded-full focus:outline-none ${loadingWhenUpdate?"bg-gray-300":"bg-white hover:bg-gray-100 cursor-pointer"} focus:ring-4 focus:ring-gray-200`} type="button">
+                        className={`inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 border border-gray-300 rounded-full focus:outline-none ${loadingWhenUpdate?"bg-gray-300":"bg-white hover:bg-gray-100 cursor-pointer"} focus:ring-2 focus:ring-gray-200`} type="button">
                           <span className="sr-only">Quantity button</span>
                           <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 1v16M1 9h16" />

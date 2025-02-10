@@ -1,31 +1,47 @@
 import React, { useContext, useEffect, useState } from "react";
 import style from "./Navbar.module.css";
 import Logo from "./../../assets/Flutza Store Logo/flutza-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CartContext } from "../../Context/CartContext";
 import { WishListContext } from "../../Context/WishListContext";
+import { useFormik } from "formik";
+import { SearchContext } from "../../Context/SearchContext";
 
 export default function Navbar() {
 
   let {totalCart} = useContext(CartContext);
   let {wishList} = useContext(WishListContext);
+  let { setSearchProducts } = useContext(SearchContext);
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
+  function getSearch(value){
+    setSearchProducts(value);
+  }
+  let formik = useFormik({
+    initialValues: {
+      search: ""
+    },
+    validate:getSearch,
+  });
+  useEffect(() => {
+    formik.setFieldValue("search", "");
+  }, [location]);
   return (
     <>
-      <nav className="flex flex-wrap justify-between items-center px-6 py-0 lg:py-5 bg-[#232323]">
+      <nav className="flex  flex-wrap justify-between items-center px-6 py-0 lg:py-5 bg-[#232323]">
         <div className="search lg:px-6 w-full lg:w-1/4 lg:order-first order-last mb-4 lg:mb-0">
-          <form className="p-5 rounded-full border border-[#505050] hover:border-[#6D767D] active:border-main overflow-hidden flex relative">
+          <form onSubmit={formik.handleSubmit} className="p-5 rounded-full border  border-[#6D767D] active:border-main overflow-hidden flex relative">
 
             <div className="absolute start-0 end-0  top-0 bottom-0 ">
-              <input
+              <input onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.search} 
+                id="search"
+                name="search"
                 type="text"
-                className="absolute outline-0 lg:text-xs text-base hover:border-[#6D767D] border-[#505050] start-0 end-0 text-white top-0 bottom-0 px-5 p-3"
+                className="absolute outline-0  text-base border-[#6D767D]  start-0 end-0 text-white top-0 bottom-0 px-5 p-3"
                 placeholder="Search here..."
               />
-              <button className="flex justify-center items-center absolute border-s cursor-pointer hover:border-[#6D767D] border-[#505050] end-0 start-9/12 top-0 bottom-0">
-                <i className="fa-solid fa-magnifying-glass text-xl text-main"></i>
-              </button>
+
             </div>
           </form>
         </div>
@@ -62,14 +78,14 @@ export default function Navbar() {
       </nav>
       {/* for mobile */}
       <div
-        className={`absolute top-0 bottom-0 z-50 start-0 end-2/12 ${isOpen? `translate-x-0`:`-translate-x-full`} duration-500 lg:hidden bg-white text-2xl`}>
+        className={`absolute  top-0 bottom-0 z-50 start-0 end-2/12 ${isOpen? `translate-x-0`:`-translate-x-full`} duration-500 lg:hidden bg-white text-2xl`}>
         <div className="fix text-white bg-main py-2 px-4 flex justify-between">
           <span className="font-semibold">MENU</span>
           <button onClick={() => setIsOpen(false)} className="cursor-pointer">
             <i className="fa-solid fa-xmark"></i>
           </button>
         </div>
-        <div className="menu">
+        <div className="menu ">
           <ul className="ps-5 space-y-4 pt-5">
             <li >
               <Link className="flex justify-between text-[#6D767D] hover:text-main duration-500" to={'/'}>
@@ -108,7 +124,7 @@ export default function Navbar() {
         </div>
       </div>
       {/* last menu navbar */}
-      {!isOpen&&<div className="navgation-menu sticky top-0 z-40 bg-main flex justify-center items-center text-white font-semibold uppercase">
+      {!isOpen && <div className="navgation-menu sticky top-0 z-40 bg-main flex justify-center items-center text-white font-semibold uppercase">
         <ul className="flex ">
           <Link to={'/'}><li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Home</li></Link>
           <Link to={'/products'}><li className="border-y-0 border-e-0 px-2 md:px-4 lg:px-5 py-2 border border-neutral-600 md:tracking-[0.15rem] hover:bg-black duration-300">Products</li></Link>

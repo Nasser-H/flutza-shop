@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { UserContext } from '../../Context/UserContext';
+import toast from 'react-hot-toast';
 
 export default function Login() {
     useEffect(() => {
@@ -14,7 +15,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const [apiError, setApiError] = useState(null);
     
-    let {userToken , setUserToken} = useContext(UserContext);
+    let { setUserToken} = useContext(UserContext);
 
     const navigate =  useNavigate()
 
@@ -28,6 +29,8 @@ export default function Login() {
         setLoading(true);
         let {data} = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values);
         setApiError(null);
+        toast.success(`Welcome ${data.user.name}`)
+        
         setUserToken(data.token);
         localStorage.setItem("userToken",data.token);
         navigate('/');

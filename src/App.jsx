@@ -23,6 +23,7 @@ import CartContextProvider from "./Context/CartContext.jsx";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import WishListContextProvider from "./Context/WishListContext.jsx";
+import SearchContextProvider from "./Context/SearchContext.jsx";
 
 
 const routers = createBrowserRouter([{
@@ -51,8 +52,10 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <CartContextProvider>          
           <WishListContextProvider>
-            <RouterProvider router={routers}></RouterProvider>
-            <Toaster/>
+            <SearchContextProvider>
+              <RouterProvider router={routers}></RouterProvider>
+              <Toaster />
+            </SearchContextProvider>
           </WishListContextProvider>
         </CartContextProvider>
       </QueryClientProvider>

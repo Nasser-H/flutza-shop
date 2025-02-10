@@ -12,6 +12,7 @@ export default function CartContextProvider({children}) {
     let {userToken} = useContext(UserContext);
     const [totalCart, setTotalCart] = useState(null);
     const [loadingWhenUpdate, setLoadingWhenUpdate] = useState(false);
+    const [loadingWhenClear, setLoadingWhenClear] = useState(false);
     const headers = {token:userToken};
     
 
@@ -29,6 +30,7 @@ export default function CartContextProvider({children}) {
         try {
             let {data} = await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`,{headers});
             setTotalCart(data);
+            setLoadingWhenClear(false);
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -55,6 +57,7 @@ export default function CartContextProvider({children}) {
     }
     async function clearCart(){
         try {
+            setLoadingWhenClear(true);
             await axios.delete("https://ecommerce.routemisr.com/api/v1/cart",{headers});
             getProductsFromCart();
             toast.success("Cleared Your Cart");
@@ -71,7 +74,7 @@ export default function CartContextProvider({children}) {
     },[userToken])
 
 
-    return <CartContext.Provider value={{ addToCart, totalCart, updateCart, loadingWhenUpdate, deleteItemFromeCart, clearCart }}>
+    return <CartContext.Provider value={{ addToCart, totalCart, updateCart, loadingWhenUpdate, deleteItemFromeCart, clearCart, loadingWhenClear }}>
         {children}
     </CartContext.Provider>
 }
