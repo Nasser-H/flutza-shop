@@ -21,7 +21,7 @@ export default function CheckOut() {
   async function checkOut(shippingAddress) {
     try {
       setLoading(true);
-      let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${totalCart?.data._id}?url=http://localhost:5173`, { shippingAddress }, { headers });
+      let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${totalCart?.data._id}?url=https://flutza-shop.vercel.app`, { shippingAddress }, { headers });
       toast.success(data.status);
       setLoading(false);
       location.href = data.session.url;
